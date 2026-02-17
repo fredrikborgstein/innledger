@@ -4,9 +4,9 @@
     <flux:heading class="sr-only">{{ __('Password Settings') }}</flux:heading>
 
     @if(auth()->user()->password_change_required || session('status') === 'password-change-required')
-        <flux:banner variant="warning" class="mb-6">
+        <div class="mb-6 rounded-lg border border-yellow-200 bg-yellow-50 p-4 text-yellow-800 dark:border-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-200">
             {{ __('You are required to change your password before continuing.') }}
-        </flux:banner>
+        </div>
     @endif
 
     <x-settings.layout :heading="__('Update password')" :subheading="__('Ensure your account is using a long, random password to stay secure')">
