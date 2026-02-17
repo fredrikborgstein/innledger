@@ -21,5 +21,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
             'property_manager' => true,
         ]);
+
+        $this->call([
+            RoomManagementSeeder::class,
+        ]);
     }
 }

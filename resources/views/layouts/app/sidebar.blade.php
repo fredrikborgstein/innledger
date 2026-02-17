@@ -17,12 +17,26 @@
                     </flux:sidebar.item>
                 </flux:sidebar.group>
 
-                <flux:sidebar.group :heading="__('Property Management')" class="grid">
+                <flux:spacer />
+
+                <flux:sidebar.group :heading="__('Property Management')" expandable class="grid">
                     <flux:sidebar.item icon="user" :href="route('property-manager.users.index')" :current="request()->routeIs('property-manager.users.index')" wire:navigate>
                         {{ __('Users') }}
                     </flux:sidebar.item>
-                    <flux:sidebar.item icon="user" :href="route('property-manager.roles.index')" :current="request()->routeIs('property-manager.roles.index')" wire:navigate>
+                    <flux:sidebar.item icon="shield-check" :href="route('property-manager.roles.index')" :current="request()->routeIs('property-manager.roles.index')" wire:navigate>
                         {{ __('Roles') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="building-office" :href="route('property-manager.rooms.index')" :current="request()->routeIs('property-manager.rooms.index')" wire:navigate>
+                        {{ __('Rooms') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="squares-2x2" :href="route('property-manager.room-categories.index')" :current="request()->routeIs('property-manager.room-categories.index')" wire:navigate>
+                        {{ __('Room Categories') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="sparkles" :href="route('property-manager.attributes.index')" :current="request()->routeIs('property-manager.attributes.index')" wire:navigate>
+                        {{ __('Attributes') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="check-circle" :href="route('property-manager.statuses.index')" :current="request()->routeIs('property-manager.statuses.index')" wire:navigate>
+                        {{ __('Statuses') }}
                     </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
