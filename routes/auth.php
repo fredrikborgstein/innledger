@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('/bookings', function () {
+    return view('property-manager.bookings.dashboard');
+})->name('bookings.dashboard');
+
 Route::prefix('/property-manager')->middleware(['property-manager'])->group(function () {
     Route::get('/roles', function () {
         return view('property-manager.roles.index');
