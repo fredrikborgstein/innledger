@@ -15,6 +15,12 @@
                     <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
+                </flux:sidebar.group>
+
+                <flux:sidebar.group :heading="__('Property Management')" class="grid">
+                    <flux:sidebar.item icon="user" :href="route('property-manager.users.index')" :current="request()->routeIs('property-manager.users.index')" wire:navigate>
+                        {{ __('Users') }}
+                    </flux:sidebar.item>
                     <flux:sidebar.item icon="user" :href="route('property-manager.roles.index')" :current="request()->routeIs('property-manager.roles.index')" wire:navigate>
                         {{ __('Roles') }}
                     </flux:sidebar.item>
@@ -22,16 +28,6 @@
             </flux:sidebar.nav>
 
             <flux:spacer />
-
-            <flux:sidebar.nav>
-                <flux:sidebar.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                    {{ __('Repository') }}
-                </flux:sidebar.item>
-
-                <flux:sidebar.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-                    {{ __('Documentation') }}
-                </flux:sidebar.item>
-            </flux:sidebar.nav>
 
             <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
         </flux:sidebar>

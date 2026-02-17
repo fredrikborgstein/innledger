@@ -17,9 +17,9 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Livewire\Component;
 
-class Index extends Component implements HasForms, HasTable, HasActions
+class Index extends Component implements HasActions, HasForms, HasTable
 {
-    use InteractsWithForms, InteractsWithTable, InteractsWithActions;
+    use InteractsWithActions, InteractsWithForms, InteractsWithTable;
 
     public function table(Table $table): Table
     {
