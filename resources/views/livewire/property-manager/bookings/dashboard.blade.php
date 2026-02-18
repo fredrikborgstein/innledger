@@ -1,41 +1,41 @@
 <div class="space-y-6">
-    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <div class="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-700 dark:bg-neutral-900">
+    <div class="grid gap-4 md:grid-cols-3">
+        <div class="rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 p-6 text-white shadow-lg">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Today's Check-ins</p>
-                    <p class="mt-2 text-3xl font-bold">{{ $stats['today_checkins'] }}</p>
+                    <p class="text-sm font-medium opacity-90">Today's Check-ins</p>
+                    <p class="mt-2 text-4xl font-bold">{{ $stats['today_checkins'] }}</p>
                 </div>
-                <div class="rounded-full bg-blue-100 p-3 dark:bg-blue-900/20">
-                    <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="rounded-full bg-white/20 p-3 backdrop-blur-sm">
+                    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
                     </svg>
                 </div>
             </div>
         </div>
 
-        <div class="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-700 dark:bg-neutral-900">
+        <div class="rounded-lg bg-gradient-to-br from-green-500 to-green-600 p-6 text-white shadow-lg">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Today's Check-outs</p>
-                    <p class="mt-2 text-3xl font-bold">{{ $stats['today_checkouts'] }}</p>
+                    <p class="text-sm font-medium opacity-90">Today's Check-outs</p>
+                    <p class="mt-2 text-4xl font-bold">{{ $stats['today_checkouts'] }}</p>
                 </div>
-                <div class="rounded-full bg-green-100 p-3 dark:bg-green-900/20">
-                    <svg class="h-6 w-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="rounded-full bg-white/20 p-3 backdrop-blur-sm">
+                    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                     </svg>
                 </div>
             </div>
         </div>
 
-        <div class="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-700 dark:bg-neutral-900">
+        <div class="rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 p-6 text-white shadow-lg">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Occupied Rooms</p>
-                    <p class="mt-2 text-3xl font-bold">{{ $stats['occupied_rooms'] }} / {{ $stats['available_rooms'] + $stats['occupied_rooms'] }}</p>
+                    <p class="text-sm font-medium opacity-90">Occupied Rooms</p>
+                    <p class="mt-2 text-4xl font-bold">{{ $stats['occupied_rooms'] }}<span class="text-2xl opacity-75">/{{ $stats['available_rooms'] + $stats['occupied_rooms'] }}</span></p>
                 </div>
-                <div class="rounded-full bg-purple-100 p-3 dark:bg-purple-900/20">
-                    <svg class="h-6 w-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="rounded-full bg-white/20 p-3 backdrop-blur-sm">
+                    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                     </svg>
                 </div>
@@ -44,84 +44,132 @@
     </div>
 
     <div class="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-700 dark:bg-neutral-900">
-        <div class="mb-6 flex items-center justify-between">
-            <h2 class="text-xl font-semibold">Booking Calendar</h2>
+        <div class="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div class="flex items-center gap-4">
+                <h2 class="text-2xl font-semibold">Booking Calendar</h2>
+                {{ $this->createBookingAction }}
+            </div>
+
+            <div class="flex flex-col gap-3 md:flex-row md:items-center">
                 <div class="flex gap-2">
-                    <button wire:click="setViewMode('week')" class="rounded px-3 py-1 text-sm {{ $viewMode === 'week' ? 'bg-blue-600 text-white' : 'bg-neutral-100 dark:bg-neutral-800' }}">
+                    <button wire:click="setViewMode('today')" class="rounded-lg px-4 py-2 text-sm font-medium transition-colors {{ $viewMode === 'today' ? 'bg-blue-600 text-white shadow-md' : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700' }}">
+                        Today
+                    </button>
+                    <button wire:click="setViewMode('week')" class="rounded-lg px-4 py-2 text-sm font-medium transition-colors {{ $viewMode === 'week' ? 'bg-blue-600 text-white shadow-md' : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700' }}">
                         Week
                     </button>
-                    <button wire:click="setViewMode('month')" class="rounded px-3 py-1 text-sm {{ $viewMode === 'month' ? 'bg-blue-600 text-white' : 'bg-neutral-100 dark:bg-neutral-800' }}">
+                    <button wire:click="setViewMode('month')" class="rounded-lg px-4 py-2 text-sm font-medium transition-colors {{ $viewMode === 'month' ? 'bg-blue-600 text-white shadow-md' : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700' }}">
                         Month
                     </button>
                 </div>
-                <div class="flex items-center gap-2">
-                    <button wire:click="previousPeriod" class="rounded p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800">
-                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                        </svg>
-                    </button>
-                    <button wire:click="today" class="rounded px-3 py-1 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800">
-                        Today
-                    </button>
-                    <button wire:click="nextPeriod" class="rounded p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800">
-                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </button>
-                </div>
-                <span class="text-lg font-medium">{{ \Carbon\Carbon::parse($selectedDate)->format('F Y') }}</span>
+
+                @if($viewMode === 'today')
+                    <div class="flex items-center gap-2">
+                        <button wire:click="previousDay" class="rounded-lg p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                        </button>
+                        <span class="min-w-[140px] text-center text-sm font-medium">{{ \Carbon\Carbon::parse($selectedDate)->format('D, M d, Y') }}</span>
+                        <button wire:click="nextDay" class="rounded-lg p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        <button wire:click="today" class="ml-2 rounded-lg bg-neutral-100 px-3 py-2 text-sm font-medium hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700">
+                            Today
+                        </button>
+                    </div>
+                @else
+                    <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-2">
+                            <label class="text-sm font-medium text-neutral-600 dark:text-neutral-400">From:</label>
+                            <input type="date" wire:model.live="startDate" class="rounded-lg border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-600 dark:bg-neutral-800">
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <label class="text-sm font-medium text-neutral-600 dark:text-neutral-400">To:</label>
+                            <input type="date" wire:model.live="endDate" class="rounded-lg border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-600 dark:bg-neutral-800">
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
 
+        @php
+            $calendarDates = $this->getCalendarDates();
+            $dateCount = count($calendarDates);
+        @endphp
+
         <div class="overflow-x-auto">
-            <table class="w-full">
-                <thead>
-                    <tr class="border-b border-neutral-200 dark:border-neutral-700">
-                        <th class="px-4 py-2 text-left text-sm font-medium">Room</th>
-                        <th class="px-4 py-2 text-left text-sm font-medium">Category</th>
-                        <th class="px-4 py-2 text-left text-sm font-medium">Status</th>
-                        <th class="px-4 py-2 text-left text-sm font-medium">Current Booking</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($rooms as $room)
-                        @php
-                            $currentBooking = $bookings->first(function($booking) use ($room) {
-                                return $booking->room_id === $room->id
-                                    && $booking->check_in_date <= now()
-                                    && $booking->check_out_date >= now();
-                            });
-                        @endphp
-                        <tr class="border-b border-neutral-200 dark:border-neutral-700">
-                            <td class="px-4 py-3 font-medium">{{ $room->room_number }}</td>
-                            <td class="px-4 py-3 text-sm">{{ $room->roomCategory->name }}</td>
-                            <td class="px-4 py-3">
-                                <span class="inline-flex rounded-full px-2 py-1 text-xs font-semibold
-                                    {{ $room->status->name === 'Available' ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400' : 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400' }}">
-                                    {{ $room->status->name }}
-                                </span>
-                            </td>
-                            <td class="px-4 py-3 text-sm">
-                                @if($currentBooking)
-                                    <div class="flex items-center gap-2">
-                                        <span class="font-medium">{{ $currentBooking->guest->full_name }}</span>
-                                        <span class="text-neutral-500">•</span>
-                                        <span class="text-neutral-600 dark:text-neutral-400">
-                                            {{ $currentBooking->check_in_date->format('M d') }} - {{ $currentBooking->check_out_date->format('M d') }}
-                                        </span>
-                                        <span class="inline-flex rounded-full px-2 py-1 text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400">
-                                            {{ $currentBooking->bookingStatus->name }}
-                                        </span>
-                                    </div>
-                                @else
-                                    <span class="text-neutral-400">No active booking</span>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="min-w-full">
+                <div class="sticky top-0 z-10 flex border-b-2 border-neutral-200 bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-800/50">
+                    <div class="w-48 shrink-0 px-4 py-3">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-neutral-600 dark:text-neutral-400">Room</span>
+                    </div>
+                    <div class="flex flex-1">
+                        @foreach($calendarDates as $date)
+                            <div class="flex-1 border-l border-neutral-200 px-2 py-3 text-center dark:border-neutral-700" style="min-width: 100px;">
+                                <div class="text-xs font-semibold uppercase text-neutral-500 dark:text-neutral-400">
+                                    {{ $date->format('D') }}
+                                </div>
+                                <div class="text-lg font-bold {{ $date->isToday() ? 'text-blue-600 dark:text-blue-400' : 'text-neutral-900 dark:text-neutral-100' }}">
+                                    {{ $date->format('d') }}
+                                </div>
+                                <div class="text-xs text-neutral-500 dark:text-neutral-400">
+                                    {{ $date->format('M') }}
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                @foreach($rooms as $room)
+                    <div class="flex border-b border-neutral-200 transition-colors hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800/30">
+                        <div class="w-48 shrink-0 border-r border-neutral-200 px-4 py-4 dark:border-neutral-700">
+                            <div class="flex flex-col gap-1">
+                                <span class="text-lg font-bold text-neutral-900 dark:text-neutral-100">{{ $room->room_number }}</span>
+                                <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ $room->roomCategory->name }}</span>
+                            </div>
+                        </div>
+
+                        <div class="relative flex flex-1">
+                            @php
+                                $processedBookings = [];
+                            @endphp
+
+                            @foreach($calendarDates as $index => $date)
+                                @php
+                                    $booking = $this->getBookingForRoomAndDate($room->id, $date);
+                                    $isFirstDay = $booking && !in_array($booking->id, $processedBookings);
+
+                                    if ($isFirstDay) {
+                                        $processedBookings[] = $booking->id;
+                                        $bookingStart = max($booking->check_in_date, $calendarDates[0]);
+                                        $bookingEnd = min($booking->check_out_date, $calendarDates[count($calendarDates) - 1]);
+                                        $duration = $bookingStart->diffInDays($bookingEnd) + 1;
+                                        $startOffset = $bookingStart->diffInDays($calendarDates[0]);
+                                    }
+                                @endphp
+
+                                <div class="relative flex-1 border-l border-neutral-200 dark:border-neutral-700" style="min-width: 100px;">
+                                    @if($isFirstDay)
+                                        <div class="absolute inset-y-1 left-1 z-10 flex items-center overflow-hidden rounded-lg px-3 py-2 shadow-sm"
+                                             style="width: calc({{ $duration * 100 }}% + {{ ($duration - 1) * 1 }}px - 0.5rem);
+                                                    background: linear-gradient(135deg, {{ $booking->bookingStatus->color === 'blue' ? '#3b82f6' : ($booking->bookingStatus->color === 'green' ? '#10b981' : ($booking->bookingStatus->color === 'yellow' ? '#f59e0b' : '#6b7280')) }} 0%, {{ $booking->bookingStatus->color === 'blue' ? '#2563eb' : ($booking->bookingStatus->color === 'green' ? '#059669' : ($booking->bookingStatus->color === 'yellow' ? '#d97706' : '#4b5563')) }} 100%);">
+                                            <div class="flex min-w-0 items-center gap-2 text-white">
+                                                <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                                </svg>
+                                                <span class="truncate text-sm font-medium">{{ $booking->guest->full_name }}</span>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
 
@@ -137,4 +185,6 @@
             </div>
         </div>
     @endif
+
+    <x-filament-actions::modals />
 </div>

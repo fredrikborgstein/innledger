@@ -31,12 +31,13 @@ return new class extends Migration
             $table->id();
             $table->string('booking_number')->unique();
             $table->foreignId('guest_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('room_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('room_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('booking_status_id')->constrained();
             $table->foreignId('created_by')->constrained('users');
             $table->date('check_in_date');
             $table->date('check_out_date');
-            $table->integer('number_of_guests')->default(1);
+            $table->integer('number_of_adults')->default(1);
+            $table->integer('number_of_children')->default(0);
             $table->decimal('total_price', 10, 2);
             $table->text('special_requests')->nullable();
             $table->text('notes')->nullable();
