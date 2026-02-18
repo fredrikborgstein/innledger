@@ -22,6 +22,7 @@ use Livewire\Component;
 class Dashboard extends Component implements HasActions, HasForms
 {
     use InteractsWithActions, InteractsWithForms;
+
     public $selectedDate;
 
     public $startDate;
@@ -181,38 +182,38 @@ class Dashboard extends Component implements HasActions, HasForms
                             ->searchable()
                             ->required()
                             ->columnSpan(2)
-                    ->createOptionForm([
-                        TextInput::make('first_name')
-                            ->required()
-                            ->maxLength(255)
-                            ->columnSpan(1),
-                        TextInput::make('last_name')
-                            ->required()
-                            ->maxLength(255)
-                            ->columnSpan(1),
-                        TextInput::make('email')
-                            ->email()
-                            ->required()
-                            ->maxLength(255)
-                            ->columnSpan(1),
-                        TextInput::make('phone')
-                            ->tel()
-                            ->maxLength(255)
-                            ->columnSpan(1),
-                        TextInput::make('country')
-                            ->maxLength(255)
-                            ->columnSpan(2),
-                        Textarea::make('address')
-                            ->rows(2)
-                            ->columnSpan(2),
-                    ])
+                            ->createOptionForm([
+                                TextInput::make('first_name')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->columnSpan(1),
+                                TextInput::make('last_name')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->columnSpan(1),
+                                TextInput::make('email')
+                                    ->email()
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->columnSpan(1),
+                                TextInput::make('phone')
+                                    ->tel()
+                                    ->maxLength(255)
+                                    ->columnSpan(1),
+                                TextInput::make('country')
+                                    ->maxLength(255)
+                                    ->columnSpan(2),
+                                Textarea::make('address')
+                                    ->rows(2)
+                                    ->columnSpan(2),
+                            ])
                             ->createOptionUsing(function (array $data) {
                                 return Guest::create($data)->id;
                             }),
                         Select::make('room_id')
                             ->label('Room')
                             ->options(Room::with('roomCategory')->get()->mapWithKeys(function ($room) {
-                                return [$room->id => $room->room_number . ' - ' . $room->roomCategory->name];
+                                return [$room->id => $room->room_number.' - '.$room->roomCategory->name];
                             }))
                             ->searchable()
                             ->columnSpan(1),
