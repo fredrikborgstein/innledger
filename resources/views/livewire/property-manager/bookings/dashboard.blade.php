@@ -126,7 +126,8 @@
                 </div>
 
                 @foreach($rooms as $room)
-                    <div class="flex border-b border-neutral-200 transition-colors hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800/30">
+                    <div class="flex border-b border-neutral-200 transition-colors hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800/30"
+                         data-room-id="{{ $room->id }}">
                         <div class="w-48 shrink-0 border-r border-neutral-200 px-4 py-4 dark:border-neutral-700">
                             <div class="flex flex-col gap-1">
                                 <span class="text-lg font-bold text-neutral-900 dark:text-neutral-100">{{ $room->room_number }}</span>
