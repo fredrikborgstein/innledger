@@ -182,6 +182,72 @@
         </div>
     </div>
 
+    @if($unassignedBookings->isNotEmpty())
+        <div class="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-700 dark:bg-neutral-900">
+            <h2 class="mb-4 text-xl font-semibold text-neutral-900 dark:text-neutral-100">
+                Unassigned Reservations
+                <span class="ml-2 rounded-full bg-amber-100 px-2.5 py-0.5 text-sm font-medium text-amber-800 dark:bg-amber-900/30 dark:text-amber-300">
+                    {{ $unassignedBookings->count() }}
+                </span>
+            </h2>
+
+            <div
+                id="unassigned-reservations-list"
+                class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
+                x-data
+                x-init="
+                    new Sortable($el, {
+                        group: { name: 'reservations', pull: 'clone', put: false },
+                        sort: false,
+                        animation: 150,
+                        ghostClass: 'opacity-40',
+                    });
+                "
+            >
+                @foreach($unassignedBookings as $booking)
+                    <div
+                        class="cursor-grab rounded-lg border border-neutral-200 bg-neutral-50 p-4 shadow-sm transition-shadow hover:shadow-md dark:border-neutral-700 dark:bg-neutral-800"
+                        data-booking-id="{{ $booking->id }}"
+                    >
+                        <div class="mb-2 flex items-center justify-between gap-2">
+                            <span class="font-semibold text-neutral-900 dark:text-neutral-100">
+                                {{ $booking->guest->full_name }}
+                            </span>
+                            <span class="shrink-0 rounded-full px-2 py-0.5 text-xs font-medium text-white"
+                                  style="background-color: {{ $booking->bookingStatus->color === 'blue' ? '#3b82f6' : ($booking->bookingStatus->color === 'green' ? '#10b981' : ($booking->bookingStatus->color === 'yellow' ? '#f59e0b' : '#6b7280')) }};">
+                                {{ $booking->bookingStatus->name }}
+                            </span>
+                        </div>
+
+                        <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                            {{ $booking->check_in_date->format('M d') }} &rarr; {{ $booking->check_out_date->format('M d, Y') }}
+                            <span class="ml-1 text-xs">({{ $booking->number_of_nights }} night{{ $booking->number_of_nights !== 1 ? 's' : '' }})</span>
+                        </p>
+
+                        <p class="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+                            {{ $booking->number_of_adults }} adult{{ $booking->number_of_adults !== 1 ? 's' : '' }}
+                            @if($booking->number_of_children > 0)
+                                &bull; {{ $booking->number_of_children }} child{{ $booking->number_of_children !== 1 ? 'ren' : '' }}
+                            @endif
+                        </p>
+
+                        <div class="mt-3">
+                            <select
+                                class="w-full rounded-md border border-neutral-300 bg-white px-3 py-1.5 text-sm text-neutral-700 shadow-sm focus:border-blue-500 focus:outline-none dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-200"
+                                wire:change="assignRoom({{ $booking->id }}, $event.target.value)"
+                            >
+                                <option value="">Quick assign a room…</option>
+                                @foreach($rooms as $room)
+                                    <option value="{{ $room->id }}">{{ $room->room_number }} &mdash; {{ $room->roomCategory->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
     @if($stats['pending_bookings'] > 0)
         <div class="rounded-lg border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-800 dark:bg-yellow-900/20">
             <div class="flex items-center gap-2">
