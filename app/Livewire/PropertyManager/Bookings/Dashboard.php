@@ -69,6 +69,7 @@ class Dashboard extends Component implements HasActions, HasForms
 
         $this->unassignedBookings = Booking::with(['guest', 'bookingStatus'])
             ->whereNull('room_id')
+            ->whereBetween('check_in_date', [$this->startDate, $this->endDate])
             ->get();
     }
 

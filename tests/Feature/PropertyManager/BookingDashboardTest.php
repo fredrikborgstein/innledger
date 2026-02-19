@@ -117,8 +117,8 @@ class BookingDashboardTest extends TestCase
             'room_id' => null,
             'booking_status_id' => $status->id,
             'created_by' => $creator->id,
-            'check_in_date' => Carbon::today()->addDays(1),
-            'check_out_date' => Carbon::today()->addDays(3),
+            'check_in_date' => Carbon::today(),
+            'check_out_date' => Carbon::today()->addDays(2),
         ]);
 
         $component = Livewire::test(Dashboard::class);
@@ -138,8 +138,8 @@ class BookingDashboardTest extends TestCase
             'room_id' => null,
             'booking_status_id' => $status->id,
             'created_by' => $creator->id,
-            'check_in_date' => Carbon::today()->addDays(1),
-            'check_out_date' => Carbon::today()->addDays(3),
+            'check_in_date' => Carbon::today(),
+            'check_out_date' => Carbon::today()->addDays(2),
         ]);
 
         Livewire::test(Dashboard::class)
@@ -158,8 +158,8 @@ class BookingDashboardTest extends TestCase
             'room_id' => null,
             'booking_status_id' => $status->id,
             'created_by' => $creator->id,
-            'check_in_date' => Carbon::today()->addDays(1),
-            'check_out_date' => Carbon::today()->addDays(3),
+            'check_in_date' => Carbon::today(),
+            'check_out_date' => Carbon::today()->addDays(2),
         ]);
 
         $component = Livewire::test(Dashboard::class);

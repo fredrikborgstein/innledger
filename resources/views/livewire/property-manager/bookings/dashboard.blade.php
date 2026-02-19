@@ -178,7 +178,7 @@
                                     @if($isFirstDay)
                                         <div class="absolute inset-y-1 z-10 flex items-center overflow-hidden rounded-lg px-3 py-2 shadow-sm"
                                              style="left: {{ $leftPercent }}%; width: calc({{ $widthPercent }}% + {{ $duration - 1 }}px);
-                                                    background: linear-gradient(135deg, {{ $booking->bookingStatus->color === 'blue' ? '#3b82f6' : ($booking->bookingStatus->color === 'green' ? '#10b981' : ($booking->bookingStatus->color === 'yellow' ? '#f59e0b' : '#6b7280')) }} 0%, {{ $booking->bookingStatus->color === 'blue' ? '#2563eb' : ($booking->bookingStatus->color === 'green' ? '#059669' : ($booking->bookingStatus->color === 'yellow' ? '#d97706' : '#4b5563')) }} 100%);">
+                                                    background: linear-gradient(135deg, {{ $booking->bookingStatus->colorHex() }} 0%, {{ $booking->bookingStatus->colorHexDark() }} 100%);">
                                             <div class="flex min-w-0 items-center gap-2 text-white">
                                                 <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
@@ -228,7 +228,7 @@
                                 {{ $booking->guest->full_name }}
                             </span>
                             <span class="shrink-0 rounded-full px-2 py-0.5 text-xs font-medium text-white"
-                                  style="background-color: {{ $booking->bookingStatus->color === 'blue' ? '#3b82f6' : ($booking->bookingStatus->color === 'green' ? '#10b981' : ($booking->bookingStatus->color === 'yellow' ? '#f59e0b' : '#6b7280')) }};">
+                                  style="background-color: {{ $booking->bookingStatus->colorHex() }};">
                                 {{ $booking->bookingStatus->name }}
                             </span>
                         </div>
