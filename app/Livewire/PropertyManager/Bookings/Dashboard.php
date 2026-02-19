@@ -173,7 +173,8 @@ class Dashboard extends Component implements HasActions, HasForms
 
     public function assignRoom(int $bookingId, int $roomId): void
     {
-        Booking::findOrFail($bookingId)->update(['room_id' => $roomId]);
+        $room = Room::findOrFail($roomId);
+        Booking::findOrFail($bookingId)->update(['room_id' => $room->id]);
         $this->loadData();
     }
 
