@@ -127,7 +127,21 @@
 
                 @foreach($rooms as $room)
                     <div class="flex border-b border-neutral-200 transition-colors hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800/30"
-                         data-room-id="{{ $room->id }}">
+                         data-room-id="{{ $room->id }}"
+                         x-data
+                         x-init="
+                             new Sortable($el, {
+                                 group: { name: 'reservations', pull: false, put: true },
+                                 animation: 150,
+                                 ghostClass: 'bg-blue-50',
+                                 onAdd(event) {
+                                     const bookingId = event.item.dataset.bookingId;
+                                     const roomId = $el.dataset.roomId;
+                                     $wire.assignRoom(parseInt(bookingId), parseInt(roomId));
+                                     event.item.remove();
+                                 },
+                             });
+                         ">
                         <div class="w-48 shrink-0 border-r border-neutral-200 px-4 py-4 dark:border-neutral-700">
                             <div class="flex flex-col gap-1">
                                 <span class="text-lg font-bold text-neutral-900 dark:text-neutral-100">{{ $room->room_number }}</span>
