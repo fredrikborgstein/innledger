@@ -1,0 +1,20 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "/Users/fredrikborgstein/Library/Application Support/Herd/bin/php84",
+            "args": [
+                "/Users/fredrikborgstein/Herd/innledger/artisan",
+                "boost:mcp"
+            ]
+        },
+        "herd": {
+            "command": "/Users/fredrikborgstein/Library/Application Support/Herd/bin/php84",
+            "args": [
+                "/Applications/Herd.app/Contents/Resources/herd-mcp.phar"
+            ],
+            "env": {
+                "SITE_PATH": "/Users/fredrikborgstein/Herd/innledger"
+            }
+        }
+    }
+}

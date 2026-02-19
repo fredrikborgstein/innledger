@@ -41,7 +41,7 @@ class Dashboard extends Component implements HasActions, HasForms
     {
         $this->selectedDate = now()->format('Y-m-d');
         $this->startDate = now()->format('Y-m-d');
-        $this->endDate = now()->format('Y-m-d');
+        $this->endDate = now()->addDay()->format('Y-m-d');
         $this->loadData();
     }
 
@@ -111,7 +111,7 @@ class Dashboard extends Component implements HasActions, HasForms
     {
         $date = Carbon::parse($this->startDate)->subDay();
         $this->startDate = $date->format('Y-m-d');
-        $this->endDate = $date->format('Y-m-d');
+        $this->endDate = $date->copy()->addDay()->format('Y-m-d');
         $this->selectedDate = $date->format('Y-m-d');
         $this->loadData();
     }
@@ -120,7 +120,7 @@ class Dashboard extends Component implements HasActions, HasForms
     {
         $date = Carbon::parse($this->startDate)->addDay();
         $this->startDate = $date->format('Y-m-d');
-        $this->endDate = $date->format('Y-m-d');
+        $this->endDate = $date->copy()->addDay()->format('Y-m-d');
         $this->selectedDate = $date->format('Y-m-d');
         $this->loadData();
     }
@@ -129,7 +129,7 @@ class Dashboard extends Component implements HasActions, HasForms
     {
         $this->selectedDate = now()->format('Y-m-d');
         $this->startDate = now()->format('Y-m-d');
-        $this->endDate = now()->format('Y-m-d');
+        $this->endDate = now()->addDay()->format('Y-m-d');
         $this->viewMode = 'today';
         $this->loadData();
     }

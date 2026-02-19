@@ -70,7 +70,9 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                             </svg>
                         </button>
-                        <span class="min-w-[140px] text-center text-sm font-medium">{{ \Carbon\Carbon::parse($selectedDate)->format('D, M d, Y') }}</span>
+                        <span class="min-w-[200px] text-center text-sm font-medium">
+                            {{ \Carbon\Carbon::parse($startDate)->format('D, M d') }} &rarr; {{ \Carbon\Carbon::parse($endDate)->format('D, M d, Y') }}
+                        </span>
                         <button wire:click="nextDay" class="rounded-lg p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800">
                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -144,17 +146,23 @@
 
                                     if ($isFirstDay) {
                                         $processedBookings[] = $booking->id;
+                                        $lastVisibleDate = $calendarDates[count($calendarDates) - 1];
                                         $bookingStart = max($booking->check_in_date, $calendarDates[0]);
-                                        $bookingEnd = min($booking->check_out_date, $calendarDates[count($calendarDates) - 1]);
+                                        $bookingEnd = min($booking->check_out_date, $lastVisibleDate);
                                         $duration = $bookingStart->diffInDays($bookingEnd) + 1;
-                                        $startOffset = $bookingStart->diffInDays($calendarDates[0]);
+
+                                        $checkInIsVisible = $booking->check_in_date >= $calendarDates[0];
+                                        $checkOutIsVisible = $booking->check_out_date <= $lastVisibleDate;
+                                        $leftPercent = $checkInIsVisible ? 50 : 0;
+                                        $rightPercent = $checkOutIsVisible ? 50 : 100;
+                                        $widthPercent = ($duration - 1) * 100 + ($rightPercent - $leftPercent);
                                     }
                                 @endphp
 
                                 <div class="relative flex-1 border-l border-neutral-200 dark:border-neutral-700" style="min-width: 100px;">
                                     @if($isFirstDay)
-                                        <div class="absolute inset-y-1 left-1 z-10 flex items-center overflow-hidden rounded-lg px-3 py-2 shadow-sm"
-                                             style="width: calc({{ $duration * 100 }}% + {{ ($duration - 1) * 1 }}px - 0.5rem);
+                                        <div class="absolute inset-y-1 z-10 flex items-center overflow-hidden rounded-lg px-3 py-2 shadow-sm"
+                                             style="left: {{ $leftPercent }}%; width: calc({{ $widthPercent }}% + {{ $duration - 1 }}px);
                                                     background: linear-gradient(135deg, {{ $booking->bookingStatus->color === 'blue' ? '#3b82f6' : ($booking->bookingStatus->color === 'green' ? '#10b981' : ($booking->bookingStatus->color === 'yellow' ? '#f59e0b' : '#6b7280')) }} 0%, {{ $booking->bookingStatus->color === 'blue' ? '#2563eb' : ($booking->bookingStatus->color === 'green' ? '#059669' : ($booking->bookingStatus->color === 'yellow' ? '#d97706' : '#4b5563')) }} 100%);">
                                             <div class="flex min-w-0 items-center gap-2 text-white">
                                                 <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
