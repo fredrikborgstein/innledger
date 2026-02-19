@@ -37,6 +37,8 @@ class Dashboard extends Component implements HasActions, HasForms
 
     public $stats;
 
+    public $unassignedBookings;
+
     public function mount()
     {
         $this->selectedDate = now()->format('Y-m-d');
@@ -64,6 +66,10 @@ class Dashboard extends Component implements HasActions, HasForms
             ->get();
 
         $this->calculateStats();
+
+        $this->unassignedBookings = Booking::with(['guest', 'bookingStatus'])
+            ->whereNull('room_id')
+            ->get();
     }
 
     public function getCalendarDates()
@@ -86,7 +92,7 @@ class Dashboard extends Component implements HasActions, HasForms
         return $this->bookings->first(function ($booking) use ($roomId, $date) {
             return $booking->room_id === $roomId
                 && $booking->check_in_date <= $date
-                && $booking->check_out_date >= $date;
+                && $booking->check_out_date > $date;
         });
     }
 
@@ -165,6 +171,12 @@ class Dashboard extends Component implements HasActions, HasForms
         $this->loadData();
     }
 
+    public function assignRoom(int $bookingId, int $roomId): void
+    {
+        Booking::findOrFail($bookingId)->update(['room_id' => $roomId]);
+        $this->loadData();
+    }
+
     public function createBookingAction(): Action
     {
         return Action::make('createBooking')
@@ -227,7 +239,7 @@ class Dashboard extends Component implements HasActions, HasForms
                             ->label('Check-in Date')
                             ->required()
                             ->native(false)
-                            ->minDate(now())
+                            ->minDate(today())
                             ->columnSpan(1),
                         DatePicker::make('check_out_date')
                             ->label('Check-out Date')
